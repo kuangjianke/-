@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条形图</title>
+    <script src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+</head>
+<body>
+<div id="echarts" style="width:1895px;height:925px"></div>
+<script>
+    var myechart = echarts.init(document.getElementById("echarts"));
+
+    var option={
+    backgroundColor: '#eee',
+    tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+        type: 'cross',
+    },
+    },
+    grid: {
+        top: '20%',
+    },
+
+    legend: {
+    x: 'center',
+    data: ['价格','销量'],
+    top:90,
+    itemGap:200,
+
+    textStyle: {
+    fontSize: 30,
+    fontWeight: 'bolder',
+    color: '#004986',
+    },},
+
+    title:{
+    text:"适用不同阶段狗粮的销量和价格",
+    x:"center",
+    textStyle: {
+    color: '#004986',
+    fontSize: 50,
+    },
+    },
+    xAxis: [
+        {type: 'category',name:'品牌',data:{{ lists|safe }},
+        axisLabel: {
+        fontSize: 12,
+        fontWeight: 'bolder',
+        color: '#004986',
+        },
+
+    },
+
+
+    ],
+    yAxis: [
+        {
+        name:"价格",
+        min: 0,
+        max: 200,
+        interval: 50,
+        axisLine: {lineStyle: {
+        color: '#5793f3',},},
+        axisLabel: {
+        fontSize: 16,
+        fontWeight: 'bolder',
+        },
+
+        },
+        {
+        name:"销量",
+        min: 0,
+        max: 15000,
+        interval: 5000,
+        axisLine: {lineStyle: {
+        color: '#d14a61',},},
+        axisLabel: {
+        fontSize: 16,
+        fontWeight: 'bolder',
+        },
+
+        },
+
+
+    ],
+
+    series: [
+        {type: 'bar',
+        name:"价格",
+
+        color: '#5793f3',
+        data:{{ list_b|safe }},
+        label: {
+        formatter:'{c}元',
+        show: true,
+        top:50,
+        position: 'top',
+        fontSize: 14,
+        fontWeight: 'bolder',
+            },
+        },
+        {type: 'bar',
+        name:"销量",
+        yAxisIndex: 1,
+        color: '#d14a61',
+
+        data:{{ list_a|safe }},
+        label: {
+
+        show: true,
+        position: 'top',
+        fontSize: 14,
+        fontWeight: 'bolder',
+            },
+        },
+
+
+
+    ]
+
+    };
+    myechart.setOption(option)
+
+</script>
+
+
+</body>
+</html>

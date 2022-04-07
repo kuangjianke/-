@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>折线图</title>
+    <script src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+</head>
+<body>
+<div id="echarts" style="width:1895px;height:925px"></div>
+<script>
+    var myechart = echarts.init(document.getElementById("echarts"));
+
+    var option = {
+        tooltip: {
+            trigger: 'none',
+            axisPointer: {
+                type: 'cross'
+            }
+        },
+
+        backgroundColor: new echarts.graphic.RadialGradient(0.4, 0.4, 1.5, [{
+            offset: 0,
+            color: '#f7f8fa'
+        }, {
+            offset: 1,
+            color: '#cdd0d5'
+        }]),
+
+        title: {
+            text: "适用不同犬种狗粮的总销量和价格",
+            x: "center",
+            textStyle: {
+                color: '#004986',
+                fontSize: 24,
+            },
+        },
+
+        legend: {
+            data: ['总销量', '价格'],
+            x: '75%',
+            textStyle: {
+                fontSize: 20,
+                fontWeight: 'bolder',
+                color: '#004986',
+            },
+        },
+
+        xAxis: [{
+            axisLine: {
+                lineStyle: {
+                    color: '#004986',
+                },
+            },
+            axisLabel: {
+                fontSize: 14,
+                fontWeight: 'bolder',
+            },
+            type: 'category',
+            boundaryGap: false,
+            data: {{ lists|safe }},
+        },
+            {
+                axisLine: {
+                    lineStyle: {
+                        color: '#004986',
+                    },
+                },
+                axisLabel: {
+                    fontSize: 14,
+                    fontWeight: 'bolder',
+                },
+                type: 'category',
+                boundaryGap: false,
+                data: {{ lists|safe }},
+            },],
+        yAxis: [
+            {
+                name: "总销量",
+                min: 0,
+                max: 88000,
+                interval: 10000,
+                axisLine: {
+                    lineStyle: {
+                        color: '#004986',
+                    },
+                },
+                axisLabel: {
+                    fontSize: 16,
+                    fontWeight: 'bolder',
+                },
+
+            },
+            {
+                name: "价格",
+                min: 150,
+                max: 250,
+                interval: 20,
+                axisLine: {
+                    lineStyle: {
+                        color: '#004986',
+                    },
+                },
+                axisLabel: {
+                    fontSize: 16,
+                    fontWeight: 'bolder',
+                },
+
+            },
+
+
+        ],
+        series: [
+            {
+                smooth: true,
+                name: '总销量',
+                type: 'line',
+                yAxisIndex: 0,
+                data: {{ counts|safe }},
+                label: {
+                    show: true,
+                    position: 'bottom',
+                    fontSize: 20,
+                    color: '#f61599',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#f61599',
+                        },
+                    },
+                    fontWeight: 'bolder',
+                },
+            },
+            {
+                smooth: true,
+                name: '价格',
+                type: 'line',
+                label: {
+                    formatter: '{c}元',
+                    show: true,
+                    position: 'top',
+                    fontSize: 20,
+                    fontWeight: 'bolder',
+                },
+                yAxisIndex: 1,
+                data: {{ price_data|safe }},
+                color: '#158af6',
+                axisLine: {
+                    lineStyle: {
+                        color: '#158af6',
+                    },
+                },
+            },
+
+        ]
+    };
+
+
+    myechart.setOption(option)
+
+</script>
+
+
+</body>
+</html>

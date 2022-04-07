@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>散点图</title>
+<script src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+</head>
+<body>
+<div id="echarts" style="width:1895px;height:925px"></div>
+<script>
+    var myechart = echarts.init(document.getElementById("echarts"));
+
+
+    var data = [
+    {{ list_data|safe }},
+];
+
+option = {
+       backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+        offset: 0,
+        color: '#f7f8fa'
+    }, {
+        offset: 1,
+        color: '#cdd0d5'
+    }]),
+
+        tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross'
+        },
+    },
+
+    title: {
+    text: '不同口味的狗粮价格和好评率',
+    x:"center",
+    textStyle: {
+    color: '#004986',
+    fontSize: 24,
+    },
+    },
+
+    xAxis: {
+        name:'价格(RMB)',
+        axisLine: {lineStyle: {
+        color: '#004986',},},
+        axisLabel: {
+        fontSize: 14,
+        fontWeight: 'bolder',
+        },
+    },
+    yAxis: {
+
+        axisLine: {lineStyle: {
+        color: '#004986',},},
+        axisLabel: {
+        fontSize: 12,
+        fontWeight: 'bolder',
+        },
+        name:'好评率',
+        splitLine: {
+            lineStyle: {
+                type: 'dashed'
+            }
+        },
+        scale: true
+    },
+
+    series: [{
+
+        data: data[0],
+        type: 'scatter',
+        itemStyle: {
+            shadowBlur: 10,
+            shadowColor: 'rgba(120, 36, 50, 0.5)',
+            shadowOffsetY: 5,
+            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                offset: 0,
+                color: 'rgb(251, 118, 123)'
+            }, {
+                offset: 1,
+                color: 'rgb(204, 46, 72)'
+            }])
+        },
+        label: {
+                fontSize: 18,
+                fontWeight: 'bolder',
+                show: true,
+                color: "#004986",
+                formatter: function (param) {
+                    return param.data[3];
+                },
+                position: 'top',
+
+            },
+        symbolSize: function (data) {
+            return Math.sqrt(data[2])*2;
+        },
+
+    }]
+};
+
+    myechart.setOption(option)
+
+</script>
+
+
+</body>
+</html>

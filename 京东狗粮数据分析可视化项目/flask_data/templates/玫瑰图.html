@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>饼图</title>
+    <script src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+</head>
+<body>
+<div id="echarts" style="width:1895px;height:925px"></div>
+<script>
+    var myechart = echarts.init(document.getElementById("echarts"));
+
+    option = {
+    backgroundColor: '#eee',
+    title: [
+
+    {
+    text: '不同适用阶段狗粮的市场占比和销量占比',
+    left: 'center',
+    textStyle: {
+    color: '#004986',
+    fontSize: 50,},
+    },
+    {
+    text: '市场占比',
+    left: '22%',
+    top:'10%',
+    textStyle: {
+    color: '#004986',
+    fontSize: 30,},
+    },
+    {
+    text: '总销量',
+    left: '72%',
+    top:'10%',
+    textStyle: {
+    color: '#004986',
+    fontSize: 30,},
+    },
+    ],
+
+
+    tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
+    legend: {
+        left: 'center',
+        top: 'bottom',
+        data: {{ lists|safe }},
+        textStyle: {
+    fontSize: 30,
+    fontWeight: 'bolder',
+    color: '#004986',
+    },
+    },
+    series: [
+        {
+            name: '市场占比',
+            type: 'pie',
+            roseType: 'radius',
+            radius: [100, 250],
+            center: ['25%', '50%'],
+
+            label: {
+                show: false
+            },
+
+                label: {
+                fontSize: 18,
+                fontWeight: 'bolder',
+                color: '#004986',
+                     formatter: '{b}:{c}\n占比:({d}%)',
+                    show: true
+                },
+
+            data: {{ data_coun|safe }},
+        },
+        {
+            name: '总销量',
+            type: 'pie',
+            roseType: 'radius',
+            radius: [100, 250],
+            center: ['75%', '50%'],
+
+            label: {
+                     formatter: '{b}:{c}\n占比:({d}%)',
+                    show: true,
+                    fontSize: 18,
+                fontWeight: 'bolder',
+                color: '#004986',
+                },
+            data: {{ count_data|safe }},
+        }
+    ]
+};
+    myechart.setOption(option)
+
+</script>
+
+
+</body>
+</html>
